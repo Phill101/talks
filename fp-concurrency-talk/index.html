@@ -8,11 +8,12 @@
 
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+		<!--<link rel="stylesheet" href="css/theme/white.css">-->
 
 		<!-- Theme used for syntax highlighting of code -->
-    <!-- <link rel="stylesheet" href="lib/css/idea.css"> -->
 		<link rel="stylesheet" href="lib/css/monokai.css">
+    <!--<link rel="stylesheet" href="lib/css/idea.css">-->
 
 		<!-- Printing and PDF exports -->
 		<!-- <script>
@@ -27,40 +28,135 @@
 		<div class="reveal">
 			<div class="slides">
 				<section data-markdown="content/conc-effects/01-introduction.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"></section>
-        <section data-markdown="content/conc-effects/02-impure.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"></section>
+                 data-separator="^\n\n\n"
+                 data-separator-vertical="^\n\n"
+                 data-separator-notes="^Note:"></section>
+        <!--<section data-markdown="content/conc-effects/02-impure.md"
+                     data-separator="^\n\n\n"
+                     data-separator-vertical="^\n\n"
+                     data-separator-notes="^Note:"></section>-->
+        <section>
+          <section>
+            <div style="align-items: center; display: flex;">
+              <pre style="margin: 10px" class="fragment fade-right stretch" data-fragment-index="1"><div class="fragment" data-fragment-index="2">Thread1</div><code class="scala" data-trim data-noescape>
+class Auction(startsWith: Bid) {
+  private var highest: Bid = startsWith
+
+  def currentBidder: Long = highest.userId
+
+  def makeBid(bid: Bid): Unit =
+    if <span class="fragment highlight-green-then-dark-green" data-fragment-index="3">(bid.amount &gt; highest.amount)</span> <span class="fragment highlight-green-then-dark-green" data-fragment-index="6">highest = bid</span>
+}
+	              </code></pre>
+              <pre style="margin: 10px" class="fragment fade-left stretch" data-fragment-index="2"><div>Thread2</div><code class="scala" data-trim data-noescape>
+class Auction(startsWith: Bid) {
+  private var highest: Bid = startsWith
+
+  def currentBidder: Long = highest.userId
+
+  def makeBid(bid: Bid): Unit =
+    if <span class="fragment highlight-green-then-dark-green" data-fragment-index="4">(bid.amount &gt; highest.amount)</span> <span class="fragment highlight-green-then-dark-green" data-fragment-index="5">highest = bid</span>
+}
+	              </code></pre>
+            </div>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+class Auction(startsWith: Bid) {
+  private var highest: Bid = startsWith
+
+  def currentBidder: Long = highest.userId
+
+  def makeBid(bid: Bid): Unit = this.synchronized {
+    if (bid.amount &gt; highest.amount) highest = bid
+  }
+}
+            </code></pre>
+            <ul>
+              <li class="fragment" data-fragment-index="1">Блокирует тред</li>
+              <li class="fragment" data-fragment-index="2">Может привести к дедлоку</li>
+              <li class="fragment" data-fragment-index="3">Тяжело рассуждать</li>
+              <li class="fragment" data-fragment-index="4">Не композируется</li>
+            </ul>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+class AuctionActor(startsWith: Bid) extends Actor {
+  var highest: Bid = startsWith
+
+  override def receive: Actor.Receive = {
+    case GetCurrentBidder =&lt; sender() ! highest.userId
+    case MakeBid(b: Bid)  =&lt;
+      if (b.amount &lt; highest.amount) highest = b
+  }
+}
+
+object AuctionActor {
+  case object GetCurrentBidder
+  case class  MakeBid(bid: Bid)
+}
+            </code></pre>
+            <ul>
+              <li class="fragment" data-fragment-index="1">Тяжело тестировать и дебажить</li>
+              <li class="fragment" data-fragment-index="2">Тяжело рассуждать</li>
+            </ul>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+class Auction(startsWith: Bid) {
+  private val highestRef: AtomicReference[Bid] = new AtomicReference(startsWith)
+
+  def currentBidder: Long = highestRef.get.userId
+
+  def makeBid(bid: Bid): Unit = highestRef.updateAndGet { highest =&gt;
+    if (bid.amount &gt; highest.amount) bid
+    else highest
+  }
+}
+            </code></pre>
+            <ul>
+              <li class="fragment" data-fragment-index="1">Side-effectful</li>
+            </ul>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+import java.util.concurrent.Semaphore
+
+val semaphore = new Semaphore(3)
+semaphore.acquire(2)
+semaphore.acquire(2)
+            </code></pre>
+            <ul>
+              <li class="fragment" data-fragment-index="1">Мы можем лучше</li>
+            </ul>
+          </section>
+        </section>
         <section data-background="#FFFFFF">
 					<img src="content/conc-effects/pics/fpcat.jpg"/>
 				</section>
-        <section data-markdown="content/conc-effects/03-io.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"></section>
+        <section data-markdown="content/conc-effects/03-io.md" 
+                 data-separator="^\n\n\n"
+                 data-separator-vertical="^\n\n"
+                 data-separator-notes="^Note:"></section>
         <section data-markdown="content/conc-effects/04-pure.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"></section>
+                 data-separator="^\n\n\n"
+                 data-separator-vertical="^\n\n"
+                 data-separator-notes="^Note:"></section>
         <section data-markdown="content/conc-effects/05-read-write.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"></section>
+                 data-separator="^\n\n\n"
+                 data-separator-vertical="^\n\n"
+                 data-separator-notes="^Note:"></section>
         <section data-markdown="content/conc-effects/06-stm.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"></section>
+                 data-separator="^\n\n\n"
+                 data-separator-vertical="^\n\n"
+                 data-separator-notes="^Note:"></section>
         <section data-markdown="content/conc-effects/07-final.md"
-                         data-separator="^\n\n\n"
-                         data-separator-vertical="^\n\n"
-                         data-separator-notes="^Note:"></section>
+                 data-separator="^\n\n\n"
+                 data-separator-vertical="^\n\n"
+                 data-separator-notes="^Note:"></section>
       </div>
 		</div>
 
-		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
 
 		<script>
@@ -71,8 +167,8 @@
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true }
+					{ src: 'plugin/highlight/highlight.js' },
+					{ src: 'plugin/notes/notes.js', async: true }
 				]
 			});
 		</script>
