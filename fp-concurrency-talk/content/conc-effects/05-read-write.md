@@ -11,6 +11,22 @@ trait ReadWrite[F[_], A] {
 
 }
 ```
+```scala
+val io = for { 
+  rw <- ReadWrite.of[IO, Int](10) 
+  (ten1, release1) <- rw.read 
+  _  <- rw.write.timeout(1.second).attempt 
+  (ten2, release2) <- rw.read 
+  _  <- release1
+  _  <- release2
+} yield (ten1, ten2)
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+Note: Можно взять блокировку в рид режиме, либо в врайт режиме.
+Пока в очереди нет врайтеров, ридеры свободно могут брать и отпускать.
+Когда появляется хотя бы один врайтер, он ложится в очередь ждать, пока все ридеры отпустят, и все остальные ридеры и врайтеры после него тоже отправляются в очередь.
+Нужно не забыть, что F[A] может быть отменён.
 
 
 <pre><code class="scala" data-trim data-noescape>
@@ -59,23 +75,21 @@ object ReadWrite {
 ```
 
 
-```scala
+<pre><code class="scala" data-trim data-noescape>
 override def read: F[(A, F[Unit])] = 
-  Deferred[F, (A, F[Unit])].bracketCase { d =>
-    state.modify {
-      case s @ State(q, r, false, a) if !q.exists(_.isWriter) => 
-        s.copy(currentReaders = r + 1) -> d.complete(a -> releaseRead)
-      case s @ State(q, _, _, _) => s.copy(q = q :+ Reader(d)) -> F.unit
-    }.flatten *> d.get
-  } {
-    case (d, ExitCase.Canceled | ExitCase.Error(_)) =>
-      state.update(s => s.copy(q = s.q.filterNot {
-        case Reader(df) => df == d
-        case _ => false
-      }))
-    case _ => F.unit
-  }
-```
+  Deferred[F, (A, F[Unit])]<span class="fragment" data-fragment-index="0">.<span class="fragment fade-in" style="position:absolute" data-fragment-index="7">bracketCase { d =></span><span class="fragment fade-out" data-fragment-index="7">flatMap { d =></span>
+    <span class="fragment" data-fragment-index="1">state.modify {
+      <span class="fragment" data-fragment-index="2">case s @ State(q, r, false, a) if q.isEmpty =></span>
+        <span class="fragment" data-fragment-index="3">s.copy(currentReaders = r + 1) -> d.complete(a -> releaseRead)</span>
+      <span class="fragment" data-fragment-index="4">case s @ State(q, _, _, _) => </span><span class="fragment" data-fragment-index="5">s.copy(q = q :+ Reader(d)) -> F.unit</span>
+    }</span><span class="fragment" data-fragment-index="3">.flatten</span><span class="fragment" data-fragment-index="6"> *> d.get</span>
+  } </span><span class="fragment" data-fragment-index="7">{
+    <span class="fragment" data-fragment-index="8">case (d, ExitCase.Canceled | ExitCase.Error(_)) =></span>
+      <span class="fragment" data-fragment-index="9">state.update(s => s.copy(q = s.q.filterNot(_ == Reader(d))))</span>
+    <span class="fragment" data-fragment-index="10">case _ => F.unit</span>
+  }</span>
+</code></pre>
+
 ```scala
 private val releaseRead: F[Unit] = 
   state.modify {
@@ -90,6 +104,7 @@ private val releaseRead: F[Unit] =
       sys.error("wrong state. next in queue should be writer")
   }.flatten
 ```
+<!-- .element: class="fragment" data-fragment-index="11" -->
 
 
 ```scala
@@ -103,10 +118,7 @@ override def write: F[(A, A => F[Unit])] =
     }.flatten *> d.get
   } {
     case (d, ExitCase.Canceled | ExitCase.Error(_)) =>
-      state.update(s => s.copy(q = s.q.filterNot {
-        case Writer(df) => df == d
-        case _ => false
-      }))
+      state.update(s => s.copy(q = s.q.filterNot(_ == Writer(d))))
     case _ => F.unit
   }
 ```
@@ -126,4 +138,24 @@ private def releaseWrite(a: A): F[Unit] =
       s.copy(q = q.drop(rCount), value = a, wl = false, cr = rCount) ->
         nextReaders.foldRight(F.unit)(_ *> _)
   }.flatten
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+
+```scala
+def get: F[A] = read.flatMap { 
+  case (a, release) => release.as(a)
+}
+
+def set(a: A): F[A] = update(_ => a)
+def update(f: A => A): F[Unit] = modify(a => (f(a), ()))
+def modify(f: A => (A, B)) = write.flatMap {
+  case (a, putAndrelease) =>
+    val (u, b) = f(a)
+    putAndrelease(u).as(b)
+}
+
+def tryRead: F[Option(A, F[Unit])]
+def tryGet: F[Option[A]]
+...
 ```

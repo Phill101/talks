@@ -1,4 +1,30 @@
 ```scala
+abstract class Ref[F[_], A] {
+  def get: F[A]
+  def set(a: A): F[Unit]
+  def update(f: A => A): F[Unit]
+  def modify[B](f: A => (A, B)): F[B]
+  // ... and more
+}
+
+object Ref {
+  def of[F[_]: Sync, A](a: A): F[Ref[F, A]]
+}
+```
+```scala
+for {
+  ref <- Ref.of[IO, Int](42)
+  v   <- ref.get
+  _   <- putStrLn(s"value is: $v") // 'value is: 42'
+  old <- ref.modify(x => ((x + 1), x + "!"))
+  nu  <- ref.get
+  _   <- putStrLn(s"$old and $nu") // '42! and 43'
+} yield ()
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+
+```scala
 class Auction private(highestRef: Ref[IO, Bid]) {
   def currentBidder: IO[Long] = highestRef.get.map(_.userId)
 
@@ -14,7 +40,8 @@ object Auction {
 }
 ```
 
-Note: "Теперь, имея необходимые знания мы наконец можем увидеть и понять решение функционального подхода. Это решение похоже на то, что мы уже видели ранее с AtomicReference. Только здесь мы используем чистый аналог Ref, предоставляемый системой эффектов. Можно заметить причудливую инициализацию через объект компаньон. Это связано с треобваниями ссылочной прозрачности. Это очевидное и натуральное решение (если немного подумать), я не буду на нём подробно останавливаться."
+Note: "Теперь, имея необходимые знания мы наконец можем увидеть и понять решение функционального подхода. И это решение похоже на то, что мы уже видели ранее с AtomicReference."
+"Можно заметить причудливую инициализацию через объект компаньон..."
 
 
 ```scala
@@ -28,4 +55,19 @@ val io: IO[Unit] = for {
 } yield ()
 ```
 
-Note: Ну хорошо, а что с семафором? Пояснить за код.
+
+```scala
+abstract class Deferred[F[_], A] {    
+  def get: F[A]    
+  def complete(a: A): F[Unit]
+}
+```
+```scala
+for {    
+  d <- Deferred[IO, Int]
+  f <- d.get.flatTap(i => putStrLn(s"completed with $i")).start
+  _ <- d.complete(42)
+  i <- f.join
+} yield i
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
