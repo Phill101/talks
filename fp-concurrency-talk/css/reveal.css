@@ -123,6 +123,27 @@ body {
     opacity: 1;
     visibility: inherit; }
 
+/* my additions */
+.row {
+  display: flex;
+}
+.column {
+  flex: 50%;
+}
+
+.reveal .slides section .fragment.highlight-green-then-dark-green {
+  opacity: 1;
+  visibility: inherit; }
+  .reveal .slides section .fragment.highlight-green-then-dark-green.visible {
+    color: #17962e;
+    visibility: inherit; }
+  .reveal .slides section .fragment.highlight-green-then-dark-green.current-fragment {
+    opacity: 1;
+    color: #17ff2e;
+    visibility: inherit;
+  }
+/* my additions */
+
 .reveal .slides section .fragment.highlight-red,
 .reveal .slides section .fragment.highlight-current-red,
 .reveal .slides section .fragment.highlight-green,

@@ -31,37 +31,21 @@
                  data-separator="^\n\n\n"
                  data-separator-vertical="^\n\n"
                  data-separator-notes="^Note:"></section>
-        <!--<section data-markdown="content/conc-effects/02-impure.md"
-                     data-separator="^\n\n\n"
-                     data-separator-vertical="^\n\n"
-                     data-separator-notes="^Note:"></section>-->
         <section>
           <section>
-            <div style="align-items: center; display: flex;">
-              <pre style="margin: 10px" class="fragment fade-right stretch" data-fragment-index="1"><div class="fragment" data-fragment-index="2">Thread1</div><code class="scala" data-trim data-noescape>
+            <pre><code class="scala" data-trim data-line-numbers="|2|6-7">
 class Auction(startsWith: Bid) {
   private var highest: Bid = startsWith
 
   def currentBidder: Long = highest.userId
 
   def makeBid(bid: Bid): Unit =
-    if <span class="fragment highlight-green-then-dark-green" data-fragment-index="3">(bid.amount &gt; highest.amount)</span> <span class="fragment highlight-green-then-dark-green" data-fragment-index="6">highest = bid</span>
+    if (bid.amount &gt; highest.amount) highest = bid
 }
-	              </code></pre>
-              <pre style="margin: 10px" class="fragment fade-left stretch" data-fragment-index="2"><div>Thread2</div><code class="scala" data-trim data-noescape>
-class Auction(startsWith: Bid) {
-  private var highest: Bid = startsWith
-
-  def currentBidder: Long = highest.userId
-
-  def makeBid(bid: Bid): Unit =
-    if <span class="fragment highlight-green-then-dark-green" data-fragment-index="4">(bid.amount &gt; highest.amount)</span> <span class="fragment highlight-green-then-dark-green" data-fragment-index="5">highest = bid</span>
-}
-	              </code></pre>
-            </div>
+            </code></pre>
           </section>
           <section>
-            <pre><code class="scala" data-trim data-noescape>
+            <pre><code class="scala" data-trim data-line-numbers="|6-8" data-fragment-index="0">
 class Auction(startsWith: Bid) {
   private var highest: Bid = startsWith
 
@@ -80,14 +64,14 @@ class Auction(startsWith: Bid) {
             </ul>
           </section>
           <section>
-            <pre><code class="scala" data-trim data-noescape>
+            <pre><code class="scala" data-trim data-line-numbers="|1-9|4-8|6-7" data-fragment-index="0">
 class AuctionActor(startsWith: Bid) extends Actor {
   var highest: Bid = startsWith
 
   override def receive: Actor.Receive = {
-    case GetCurrentBidder =&lt; sender() ! highest.userId
-    case MakeBid(b: Bid)  =&lt;
-      if (b.amount &lt; highest.amount) highest = b
+    case GetCurrentBidder =&gt; sender() ! highest.userId
+    case MakeBid(b: Bid)  =&gt;
+      if (b.amount &gt; highest.amount) highest = b
   }
 }
 
@@ -97,29 +81,30 @@ object AuctionActor {
 }
             </code></pre>
             <ul>
-              <li class="fragment" data-fragment-index="1">Тяжело тестировать и дебажить</li>
-              <li class="fragment" data-fragment-index="2">Тяжело рассуждать</li>
+              <li class="fragment" data-fragment-index="3">Тяжело тестировать и дебажить</li>
+              <li class="fragment" data-fragment-index="4">Тяжело рассуждать</li>
             </ul>
           </section>
           <section>
-            <pre><code class="scala" data-trim data-noescape>
+            <pre><code class="scala" data-trim data-line-numbers="|2|4,6-10|6-10" data-fragment-index="0">
 class Auction(startsWith: Bid) {
-  private val highestRef: AtomicReference[Bid] = new AtomicReference(startsWith)
+  private val highestRef = new AtomicReference(startsWith)
 
   def currentBidder: Long = highestRef.get.userId
 
-  def makeBid(bid: Bid): Unit = highestRef.updateAndGet { highest =&gt;
-    if (bid.amount &gt; highest.amount) bid
-    else highest
-  }
+  def makeBid(bid: Bid): Unit = 
+    highestRef.updateAndGet { highest =&gt;
+      if (bid.amount &gt; highest.amount) bid
+      else highest
+    }
 }
             </code></pre>
             <ul>
-              <li class="fragment" data-fragment-index="1">Side-effectful</li>
+              <li class="fragment" data-fragment-index="3">Side-effectful</li>
             </ul>
           </section>
           <section>
-            <pre><code class="scala" data-trim data-noescape>
+            <pre><code class="scala" data-trim data-line-numbers="|5" data-fragment-index="0">
 import java.util.concurrent.Semaphore
 
 val semaphore = new Semaphore(3)
@@ -134,10 +119,116 @@ semaphore.acquire(2)
         <section data-background="#FFFFFF">
 					<img src="content/conc-effects/pics/fpcat.jpg"/>
 				</section>
-        <section data-markdown="content/conc-effects/03-io.md" 
-                 data-separator="^\n\n\n"
-                 data-separator-vertical="^\n\n"
-                 data-separator-notes="^Note:"></section>
+        <section>
+          <section>
+            <h2>Referential transparency</h2>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim>
+val expr = 123
+(expr, expr)
+            </code></pre>
+            тоже что и
+            <pre><code class="scala" data-trim>
+(123, 123)
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim>
+val expr = println("Hello!")
+(expr, expr)
+            </code></pre>
+            <s>тоже что и</s>
+            <pre><code class="scala" data-trim>
+(println("Hello!"), println("Hello!"))
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim>
+class IO[A](val unsafeInterpret: () =&gt; A) { s =&gt;
+  def map[B](f: A =&gt; B) = flatMap(f.andThen(IO(_)))
+
+  def flatMap[B](f: A =&gt; IO[B]): IO[B] = 
+    IO { f(s.unsafeInterpret()).unsafeInterpret() }
+}
+object IO {
+  def apply[A](eff: =&gt; A) = new IO(() =&gt; eff)
+}
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim>
+def putStrLn(s: String): IO[Unit] = IO(println(s))
+val readLn: IO[String] = IO(scala.io.StdIn.readLine())
+            </code></pre>
+            <pre class="fragment" data-fragment-index="1"><code class="scala" data-trim>
+val program: IO[Unit] = for {
+  _    &lt;- putStrLn("Hello, what is your name?")
+  name &lt;- readLn
+  _    &lt;- putStrLn(s"Glad to meet you, $name")
+} yield ()
+            </code></pre>
+            <pre class="fragment" data-fragment-index="2"><code class="scala" data-trim>
+program.unsafeInterpret()
+            </code></pre>
+            <ul>
+              <li class="fragment" data-fragment-index="3">Композируемость</li>
+              <li class="fragment" data-fragment-index="4">Local reasoning</li>
+              <li class="fragment" data-fragment-index="5">Рефакторинг</li>
+            </ul>
+          </section>
+          <section data-background="FFFFFF">
+            <img src="content/conc-effects/pics/typeclasses-cheat-sheet.png"/>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-line-numbers="|1-3||2|5-8|7" data-fragment-index="0">
+@typeclass trait Concurrent[F[_]] extends Async[F] {
+  def start[A](fa: F[A]): F[Fiber[F, A]]
+}
+
+trait Fiber[F[_], A] {
+  def cancel: F[Unit]
+  def join: F[A]
+}
+            </code></pre>
+            <pre class="fragment" data-fragment-index="1"><code class="scala" data-trim data-line-numbers="|4|4|6" data-fragment-index="2">
+def makeRequest(url: String): IO[Response]
+
+for {
+  fiber &lt;- makeRequest(url).start
+  _     &lt;- putStrLn("something else here")
+  resp  &lt;- fiber.join
+} yield resp
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-line-numbers="|6" data-fragment-index="1">
+def makeRequest(url: String): IO[Response]
+
+for {
+  fiber &lt;- makeRequest(url).start
+  _     &lt;- putStrLn("something else here")
+  _     &lt;- fiber.cancel
+} yield ???
+            </code></pre>
+            <pre class="fragment" data-fragment-index="2"><code class="scala" data-trim data-line-numbers="|4" data-fragment-index="3">
+val task1: IO[Int]
+val task2: IO[Boolean]
+
+val winner: Either[Int, Boolean] = IO.race(task1, task2)
+            </code></pre>
+            <pre class="fragment" data-fragment-index="4"><code class="scala" data-trim data-line-numbers="|4" data-fragment-index="5">
+val task: IO[Int]
+
+for {
+  f &lt;- task.timeout(1.second).start
+  _ &lt;- putStrLn("waiting for a task")
+  i &lt;- f.join // fail-fast on timeout
+  _ &lt;- puStrLn(s"success: $i")
+} yield ()
+            </code></pre>
+          </section>
+        </section>
         <section data-markdown="content/conc-effects/04-pure.md"
                  data-separator="^\n\n\n"
                  data-separator-vertical="^\n\n"
@@ -164,6 +255,8 @@ semaphore.acquire(2)
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+        //width: '100%',
+        //height: '100%',
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
