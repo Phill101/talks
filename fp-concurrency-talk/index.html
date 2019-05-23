@@ -301,10 +301,161 @@ for {
             </code></pre>
           </section>
         </section>
-        <section data-markdown="content/conc-effects/05-read-write.md"
-                 data-separator="^\n\n\n"
-                 data-separator-vertical="^\n\n"
-                 data-separator-notes="^Note:"></section>
+
+        <section>
+          <section>
+            <h2>Read write</h2>
+            <pre><code class="scala" data-trim>
+trait ReadWrite[F[_], A] {
+
+  /** current value and release action*/
+  def read:  F[(A, F[Unit])]
+
+  /** current value and putAndRelease action*/
+  def write: F[(A, A =&gt; F[Unit])]
+
+}
+            </code></pre>
+            <pre class="fragment" data-fragment-index="1"><code class="scala" data-trim>
+val io = for { 
+  rw &lt;- ReadWrite.of[IO, Int](10) 
+  (ten1, release1) &lt;- rw.read 
+  _  &lt;- rw.write.timeout(1.second).attempt 
+  (ten2, release2) &lt;- rw.read 
+  _  &lt;- release1
+  _  &lt;- release2
+} yield (ten1, ten2)
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+final case class State[F[_], A](q: Queue[<span class="fragment" data-fragment-index="1">Op[F, A]</span>],
+                                currentReaders: Int, 
+                                writeLocked: Boolean, 
+                                value: A)
+            </code></pre>
+            <pre class="fragment" data-fragment-index="1"><code class="scala" data-trim data-noescape>
+sealed trait Op[F[_], A] {
+  def isReader: Boolean = false
+  def isWriter: Boolean = false
+}
+
+final case class Reader[F[_], A](d: Deferred[F, (A, F[Unit])]) extends Op[F, A] {
+  override def isReader = true
+}
+
+final case class Writer[F[_], A](d: Deferred[F, (A, A =&gt; F[Unit])]) extends Op[F, A] {
+  override def isWriter = true
+}
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+object ReadWrite {
+
+  final class ConcurrentReadWrite[F[_], A](state: Ref[F, State[F, A]])
+                                 (implicit F: Concurrent[F]) extends ReadWrite[F, A] {
+
+    override def read : F[(A, F[Unit])] = ???
+
+    override def write: F[(A, A =&gt; F[Unit])] = ???
+
+    private val releaseRead: F[Unit] = ???
+
+    private def releaseWrite(a: A): F[Unit] = ???
+  }
+
+  def of[F[_]: Concurrent, A](value: A): F[ReadWrite[F, A]] = 
+     Ref.of[F, State[F, A]](State(Queue.empty, 0, false, value))
+       .map(new ConcurrentReadWrite[F, A](_))
+
+}
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+override def read: F[(A, F[Unit])] = 
+  Deferred[F, (A, F[Unit])]<span class="fragment" data-fragment-index="0">.<span class="fragment fade-in" style="position:absolute" data-fragment-index="7">bracketCase { d =&gt;</span><span class="fragment fade-out" data-fragment-index="7">flatMap { d =&gt;</span>
+    <span class="fragment" data-fragment-index="1">state.modify {
+      <span class="fragment" data-fragment-index="2">case s @ State(q, r, false, a) if q.isEmpty =&gt;</span>
+        <span class="fragment" data-fragment-index="3">s.copy(currentReaders = r + 1) -&gt; d.complete(a -&gt; releaseRead)</span>
+      <span class="fragment" data-fragment-index="4">case s @ State(q, _, _, _) =&gt; </span><span class="fragment" data-fragment-index="5">s.copy(q = q :+ Reader(d)) -&gt; F.unit</span>
+    }</span><span class="fragment" data-fragment-index="3">.flatten</span><span class="fragment" data-fragment-index="6"> *&gt; d.get</span>
+  } </span><span class="fragment" data-fragment-index="7">{
+    <span class="fragment" data-fragment-index="8">case (d, ExitCase.Canceled | ExitCase.Error(_)) =&gt;</span>
+      <span class="fragment" data-fragment-index="9">state.update(s =&gt; s.copy(q = s.q.filterNot(_ == Reader(d))))</span>
+    <span class="fragment" data-fragment-index="10">case _ =&gt; F.unit</span>
+  }</span>
+            </code></pre>
+            <pre class="fragment" data-fragment-index="11"><code class="scala" data-trim data-noescape>
+private val releaseRead: F[Unit] = 
+  state.modify {
+    case s @ State(q, r, _, _) if q.isEmpty =&gt; 
+      s.copy(currentReaders = r - 1) -&gt; F.unit
+    case s @ State(Writer(d) +: tl, 1, _, a) =&gt; 
+      s.copy(q = tl, currentReaders = 0, writeLocked = true) -&gt; 
+        d.complete(a -&gt; releaseWrite)
+    case s @ State(Writer(_) +: _, r, _, _) =&gt; 
+      s.copy(currentReaders = r - 1) -&gt; F.unit
+    case State(Reader(_) +: _, _, _, _) =&gt; 
+      sys.error("wrong state. next in queue should be writer")
+  }.flatten
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+override def write: F[(A, A =&gt; F[Unit])] = 
+  Deferred[F, (A, A =&gt; F[Unit])].bracketCase { d =&gt;
+    state.modify {
+      case s @ State(q, 0, false, a) if q.isEmpty =&gt; 
+        s.copy(wl = true) -&gt; d.complete(a -&gt; releaseWrite)
+      case s @ State(q, _, _, _) =&gt; 
+        s.copy(q = q :+ Writer(d)) -&gt; F.unit
+    }.flatten *&gt; d.get
+  } {
+    case (d, ExitCase.Canceled | ExitCase.Error(_)) =&gt;
+      state.update(s =&gt; s.copy(q = s.q.filterNot(_ == Writer(d))))
+    case _ =&gt; F.unit
+  }
+            </code></pre>
+            <pre class="fragment" data-fragment-index="1"><code class="scala" data-trim data-noescape>
+private def releaseWrite(a: A): F[Unit] = 
+  state.modify {
+    case s @ State(q, _, _, _) if q.isEmpty  =&gt; 
+      s.copy(value = a, wl = false) -&gt; F.unit
+    case s @ State(Writer(d) +: tl, _, _, _) =&gt; 
+      s.copy(q = tl, value = a) -&gt; d.complete(a -&gt; releaseWrite)
+    case s @ State(q, _, _, _) =&gt;
+      val nextReaders = q.iterator.takeWhile(_.isReader).collect {
+        case Reader(d) =&gt; d.complete(a -&gt; releaseRead)
+      }.toList
+      val rCount = nextReaders.size
+
+      s.copy(q = q.drop(rCount), value = a, wl = false, cr = rCount) -&gt;
+        nextReaders.foldRight(F.unit)(_ *&gt; _)
+  }.flatten
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+def get: F[A] = read.flatMap { 
+  case (a, release) =&gt; release.as(a)
+}
+
+def set(a: A): F[A] = update(_ =&gt; a)
+def update(f: A =&gt; A): F[Unit] = modify(a =&gt; (f(a), ()))
+def modify(f: A =&gt; (A, B)) = write.flatMap {
+  case (a, putAndrelease) =&gt;
+    val (u, b) = f(a)
+    putAndrelease(u).as(b)
+}
+
+def tryRead: F[Option(A, F[Unit])]
+def tryGet: F[Option[A]]
+...
+            </code></pre>
+          </section>
+        </section>
         <section data-markdown="content/conc-effects/06-stm.md"
                  data-separator="^\n\n\n"
                  data-separator-vertical="^\n\n"
