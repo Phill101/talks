@@ -456,10 +456,64 @@ def tryGet: F[Option[A]]
             </code></pre>
           </section>
         </section>
-        <section data-markdown="content/conc-effects/06-stm.md"
-                 data-separator="^\n\n\n"
-                 data-separator-vertical="^\n\n"
-                 data-separator-notes="^Note:"></section>
+        <section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+def transfer(from  : Ref[Account], 
+             to    : Ref[Account], 
+             amount: Amount): IO[Unit] = ???
+  // if (from.get &gt;= amount) 
+  //   from.update(_ - amount) *&gt; to.update(_ + amount)
+  // else 
+  //   IO.sleep(1.second) *&gt; transfer(from, to, amount)
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+def transfer(from  : TRef[Account], 
+             to    : TRef[Account], 
+             amount: Amount): STM[Unit] =
+  for {
+    balance &lt;- from.get
+    if balance &gt;= amount // Or STM.check(balance &gt;= amount)
+    _ &lt;- from.update(_ - amount)
+    _ &lt;- to.update(_ + amount)
+  } yield ()
+            </code></pre>
+            <pre class="fragment" data-fragment-index="0"><code class="scala" data-trim data-noescape>
+def moneyTransfer(sender   : User, 
+                  recipient: User, 
+                  amount   : Amount): IO[Unit] =
+  for {
+    from &lt;- sender.account
+    to   &lt;- recipient.account
+    _    &lt;- transfer(from, to, amount).commit[IO]
+  } yield ()
+            </code></pre>
+            <span class="fragment" data-fragment-index="1">Atomicity</span>
+            <span class="fragment" data-fragment-index="2"> + Consistency</span>
+            <span class="fragment" data-fragment-index="3"> + Isolation</span>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim data-noescape>
+class TSemaphore private(val permits: TRef[Long]) {
+  def acquireN(n: Long) =
+    for {
+      value &lt;- permits.get
+      if value &gt;= n
+      _ &lt;- permits.set(value - n)
+    } yield ()
+
+  def releaseN(n: Long) =
+    permits.update(_ + n)
+}
+
+object TSemaphore {
+  def make(n: Long) = TRef(n).map(new TSemaphore(_))
+}
+            </code></pre>
+          </section>
+        </section>
         <section data-markdown="content/conc-effects/07-final.md"
                  data-separator="^\n\n\n"
                  data-separator-vertical="^\n\n"
