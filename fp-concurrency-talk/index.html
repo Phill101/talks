@@ -229,10 +229,78 @@ for {
             </code></pre>
           </section>
         </section>
-        <section data-markdown="content/conc-effects/04-pure.md"
-                 data-separator="^\n\n\n"
-                 data-separator-vertical="^\n\n"
-                 data-separator-notes="^Note:"></section>
+        <section>
+          <section>
+            <pre><code class="scala" data-trim>
+abstract class Ref[F[_], A] {
+  def get: F[A]
+  def set(a: A): F[Unit]
+  def update(f: A =&gt; A): F[Unit]
+  def modify[B](f: A =&gt; (A, B)): F[B]
+  // ... and more
+}
+
+object Ref {
+  def of[F[_]: Sync, A](a: A): F[Ref[F, A]]
+}
+            </code></pre>
+            <pre class="fragment" data-fragment-index="2"><code class="scala" data-trim>
+for {
+  ref &lt;- Ref.of[IO, Int](42)
+  v   &lt;- ref.get
+  _   &lt;- putStrLn(s"value is: $v") // 'value is: 42'
+  old &lt;- ref.modify(x =&gt; ((x + 1), x + "!"))
+  nu  &lt;- ref.get
+  _   &lt;- putStrLn(s"$old and $nu") // '42! and 43'
+} yield ()
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim>
+class Auction private(highestRef: Ref[IO, Bid]) {
+  def currentBidder: IO[Long] = highestRef.get.map(_.userId)
+
+  def makeBid(bid: Bid): IO[Unit] = highestRef.update { highest =&gt;
+    if (bid.amount &gt; highest.amount) bid
+    else highest
+  }
+}
+
+object Auction {
+  def startWith(bid: Bid): IO[Auction] =
+    Ref.of[IO, Bid](bid).map(new Auction(_))
+}
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim>
+def putStrLn(s: Any): IO[Unit] = IO(println(s))
+
+val io: IO[Unit] = for {
+  semaphore &lt;- Semaphore[IO](3)
+  f &lt;- semaphore.acquireN(2).start
+  _ &lt;- semaphore.acquireN(2).timeout(1.second).start
+  _ &lt;- IO.sleep(1.second) *&gt; semaphore.available &gt;&gt;= putStrLn
+} yield ()
+            </code></pre>
+          </section>
+          <section>
+            <pre><code class="scala" data-trim>
+abstract class Deferred[F[_], A] {    
+  def get: F[A]    
+  def complete(a: A): F[Unit]
+}
+            </code></pre>
+            <pre class="fragment" data-fragment-index="1"><code class="scala" data-trim>
+for {    
+  d &lt;- Deferred[IO, Int]
+  f &lt;- d.get.flatTap(i =&gt; putStrLn(s"completed with $i")).start
+  _ &lt;- d.complete(42)
+  i &lt;- f.join
+} yield i
+            </code></pre>
+          </section>
+        </section>
         <section data-markdown="content/conc-effects/05-read-write.md"
                  data-separator="^\n\n\n"
                  data-separator-vertical="^\n\n"
