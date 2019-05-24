@@ -28,7 +28,12 @@
 		<div class="reveal">
 			<div class="slides">
         <section>
-          <h2>Про concurrency</h2>
+          <section>
+            <h2>Про concurrency</h2>
+          </section>
+          <section>
+            todo план
+          </section>
         </section>
         <section>
           <section>
@@ -59,13 +64,15 @@ class Auction(startsWith: Bid) {
               <li class="fragment" data-fragment-index="1">Блокирует тред</li>
               <li class="fragment" data-fragment-index="2">Может привести к дедлоку</li>
               <li class="fragment" data-fragment-index="3">Тяжело рассуждать</li>
-              <li class="fragment" data-fragment-index="4">Не композируется</li>
             </ul>
+          </section>
+          <section>
+            todo картинка про актор
           </section>
           <section>
             <pre><code class="scala" data-trim data-line-numbers="|1-9|4-8|6-7" data-fragment-index="0">
 class AuctionActor(startsWith: Bid) extends Actor {
-  var highest: Bid = startsWith
+  private var highest: Bid = startsWith
 
   override def receive: Actor.Receive = {
     case GetCurrentBidder =&gt; sender() ! highest.userId
@@ -85,7 +92,7 @@ object AuctionActor {
             </ul>
           </section>
           <section>
-            <pre><code class="scala" data-trim data-line-numbers="|2|4,6-10|6-10" data-fragment-index="0">
+            <pre><code class="scala" data-trim data-line-numbers="|2|6-10" data-fragment-index="0">
 class Auction(startsWith: Bid) {
   private val highestRef = new AtomicReference(startsWith)
 
@@ -127,7 +134,7 @@ semaphore.acquire(2)
 val expr = 123
 (expr, expr)
             </code></pre>
-            тоже что и
+            то же что и
             <pre><code class="scala" data-trim>
 (123, 123)
             </code></pre>
@@ -137,13 +144,16 @@ val expr = 123
 val expr = println("Hello!")
 (expr, expr)
             </code></pre>
-            <s>тоже что и</s>
+            <s>то же что и</s>
             <pre><code class="scala" data-trim>
 (println("Hello!"), println("Hello!"))
             </code></pre>
+            <aside class="notes">
+              Выражение считается ссылочно-прозрачным если, для всех возможных программ, все упоминания этого выражения могут быть заменены результатом вычисления этого выражения, не изменяя смысла программы. Функция считается чистой, если при любых ссылочно-прозрачных аргументах, её результат ссылочно-прозрачен.
+            </aside>
           </section>
           <section>
-            <pre><code class="scala" data-trim>
+            <pre><code class="scala" data-trim data-line-numbers="|1,8|2,4-5">
 class IO[A](val unsafeInterpret: () =&gt; A) { s =&gt;
   def map[B](f: A =&gt; B) = flatMap(f.andThen(IO(_)))
 
@@ -170,11 +180,11 @@ val program: IO[Unit] = for {
             <pre class="fragment" data-fragment-index="2"><code class="scala" data-trim>
 program.unsafeInterpret()
             </code></pre>
-            <ul>
+            <!--<ul>
               <li class="fragment" data-fragment-index="3">Композируемость</li>
               <li class="fragment" data-fragment-index="4">Local reasoning</li>
               <li class="fragment" data-fragment-index="5">Рефакторинг</li>
-            </ul>
+            </ul>-->
           </section>
           <section data-background="FFFFFF">
             <img src="content/conc-effects/pics/typeclasses-cheat-sheet.png"/>
@@ -457,15 +467,21 @@ def tryGet: F[Option[A]]
         </section>
         <section>
           <section>
+            <h2>STM</h2>
+          </section>
+          <section>
             <pre><code class="scala" data-trim data-noescape>
 def transfer(from  : Ref[Account], 
              to    : Ref[Account], 
-             amount: Amount): IO[Unit] = ???
-  // if (from.get &gt;= amount) 
-  //   from.update(_ - amount) *&gt; to.update(_ + amount)
-  // else 
-  //   IO.sleep(1.second) *&gt; transfer(from, to, amount)
+             amount: Amount): IO[Unit] =
+  if (from.get &gt;= amount) 
+    from.update(_ - amount) *&gt; to.update(_ + amount)
+  else 
+    IO.sleep(1.second) *&gt; transfer(from, to, amount)
             </code></pre>
+          </section>
+          <section>
+            <h2>Software Transactional Memory</h2>
           </section>
           <section>
             <pre><code class="scala" data-trim data-noescape>
