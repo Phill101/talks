@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/additions.css">
 		<!--<link rel="stylesheet" href="css/theme/white.css">-->
 
 		<!-- Theme used for syntax highlighting of code -->
@@ -29,7 +30,13 @@
 			<div class="slides">
         <section>
           <section>
-            <h2>Про concurrency</h2>
+            <h2>Про <span style="color: red;">concurrency</span></h2>
+            <div style="float: right;">
+              <hr></hr>
+              <div style="text-align: right;"><small>Никита Филимонов</small></div>
+              <div style="text-align: right;"><small>Scala developer</small></div>
+              <div style="text-align: right;"><small>Tinkoff.ru</small></div>
+            </div>
           </section>
           <section>
             Сегодня
@@ -73,7 +80,7 @@ class Auction(startsWith: Bid) {
             <ul>
               <li class="fragment" data-fragment-index="1">Блокирует тред</li>
               <li class="fragment" data-fragment-index="2">Может привести к дедлоку</li>
-              <li class="fragment" data-fragment-index="3">Тяжело рассуждать</li>
+              <li class="fragment" data-fragment-index="3">Тяжело рассуждать о коде</li>
             </ul>
           </section>
           <section>
@@ -98,7 +105,7 @@ object AuctionActor {
             </code></pre>
             <ul>
               <li class="fragment" data-fragment-index="3">Тяжело тестировать и дебажить</li>
-              <li class="fragment" data-fragment-index="4">Тяжело рассуждать</li>
+              <li class="fragment" data-fragment-index="4">Тяжело рассуждать о коде</li>
             </ul>
           </section>
           <section>
@@ -116,7 +123,7 @@ class Auction(startsWith: Bid) {
 }
             </code></pre>
             <ul>
-              <li class="fragment" data-fragment-index="3">Side-effectful</li>
+              <li class="fragment" data-fragment-index="3">Сайд-эффекты</li>
             </ul>
           </section>
           <section>
@@ -132,7 +139,7 @@ semaphore.acquire(2)
             </ul>
           </section>
         </section>
-        <section data-background="#FFFFFF">
+        <section><!--data-background="#FFFFFF"-->
 					<img src="content/conc-effects/pics/fpcat.jpg"/>
 				</section>
         <section>
@@ -529,8 +536,7 @@ class TSemaphore private(val permits: TRef[Long]) {
       _ &lt;- permits.set(value - n)
     } yield ()
 
-  def releaseN(n: Long) =
-    permits.update(_ + n)
+  def releaseN(n: Long) = permits.update(_ + n)
 }
 
 object TSemaphore {
@@ -557,6 +563,7 @@ object TSemaphore {
 			Reveal.initialize({
         //width: '100%',
         //height: '100%',
+        slideNumber: true,
 				dependencies: [
 					//{ src: 'plugin/markdown/marked.js' },
 					//{ src: 'plugin/markdown/markdown.js' },

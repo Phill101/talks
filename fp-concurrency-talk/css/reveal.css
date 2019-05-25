@@ -124,7 +124,7 @@ body {
     visibility: inherit; }
 
 /* my additions */
-.row {
+/*.row {
   display: flex;
 }
 .column {
@@ -141,7 +141,7 @@ body {
     opacity: 1;
     color: #17ff2e;
     visibility: inherit;
-  }
+  }*/
 /* my additions */
 
 .reveal .slides section .fragment.highlight-red,
