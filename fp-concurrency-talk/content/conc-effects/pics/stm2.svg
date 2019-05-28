@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="275.63mm" height="129.39mm" version="1.1" viewBox="0 0 275.63 129.39" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="marker17478" overflow="visible" orient="auto">
+   <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="marker17234" overflow="visible" orient="auto">
+   <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="Arrow1Lend" overflow="visible" orient="auto">
+   <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#f1f1f1" stroke-width="1pt"/>
+  </marker>
+  <marker id="marker4124" overflow="visible" orient="auto">
+   <path transform="matrix(.4 0 0 .4 4 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="TriangleOutM" overflow="visible" orient="auto">
+   <path transform="scale(.4)" d="m5.77 0-8.65 5v-10z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="marker4124-2" overflow="visible" orient="auto">
+   <path transform="matrix(.4 0 0 .4 4 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="TriangleOutM-6" overflow="visible" orient="auto">
+   <path transform="scale(.4)" d="m5.77 0-8.65 5v-10z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="TriangleOutM-1" overflow="visible" orient="auto">
+   <path transform="scale(.4)" d="m5.77 0-8.65 5v-10z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="marker4124-9" overflow="visible" orient="auto">
+   <path transform="matrix(.4 0 0 .4 4 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="TriangleOutM-63" overflow="visible" orient="auto">
+   <path transform="scale(.4)" d="m5.77 0-8.65 5v-10z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="TriangleOutM-63-4" overflow="visible" orient="auto">
+   <path transform="scale(.4)" d="m5.77 0-8.65 5v-10z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+ </defs>
+ <g transform="translate(-3.9589 134.22)">
+  <g transform="translate(77.508 1.5613)">
+   <text x="-70.572868" y="-118.31756" fill="#000000" font-family="Arial" font-size="7.7611px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-70.572868" y="-118.31756" fill="#ffffff" font-size="14.111px" stroke-width=".26458">Thread 2</tspan></text>
+   <rect x="-73.299" y="-132.3" width="61.56" height="17.995" fill="none" stroke="#fff" stroke-linejoin="round" stroke-width=".5"/>
+  </g>
+  <text x="6.9352951" y="-14.574619" fill="#000000" font-family="Arial" font-size="7.7611px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="6.9352951" y="-14.574619" fill="#ffffff" font-size="14.111px" stroke-width=".26458">Thread 1</tspan></text>
+  <rect x="4.2089" y="-28.56" width="61.56" height="17.995" fill="none" stroke="#fff" stroke-linejoin="round" stroke-width=".5"/>
+  <g stroke="#fff" stroke-width=".5">
+   <path d="m54.366-70.404h224.25" fill="none" marker-end="url(#marker17234)" stroke-dasharray="3.00000014, 3.00000014"/>
+   <rect x="81.126" y="-22.998" width="76.727" height="7.3704" fill="#0000c9"/>
+   <rect x="161.58" y="-22.988" width="84.055" height="7.3489" fill="#f00"/>
+  </g>
+  <g fill="none" stroke="#fff" stroke-width=".5">
+   <path d="m65.768-19.313h15.368" stroke-dasharray="3, 3"/>
+   <path d="m158.1-19.313h3.482" stroke-dasharray="3, 3"/>
+   <path d="m80.875-24.234 0.0108-40.09" marker-end="url(#TriangleOutM)" marker-start="url(#marker4124)"/>
+  </g>
+  <g stroke="#fff" stroke-width=".5">
+   <rect x="77.212" y="-74.078" width="7.3489" height="7.3489" fill="#fff"/>
+   <path d="m159.84-24.234 0.0108-40.09" fill="none" marker-end="url(#TriangleOutM-6)" marker-start="url(#marker4124-2)"/>
+   <rect x="156.17" y="-74.078" width="7.3489" height="7.3489" fill="#fff"/>
+   <path d="m245.64-22.988 0.0108-41.278" fill="none" marker-end="url(#TriangleOutM-1)"/>
+   <rect x="241.98" y="-74.078" width="7.3489" height="7.3489" fill="#fff"/>
+  </g>
+  <g fill="#ffffff" font-family="Arial" font-size="7.0556px" letter-spacing="0px" stroke-width=".26458" text-anchor="middle" word-spacing="0px">
+   <text x="147.88026" y="-48.792168" style="line-height:1.25" xml:space="preserve"><tspan x="147.88026" y="-48.792168" text-align="center">Данные согласованы?</tspan><tspan x="147.88026" y="-39.090778" text-align="center">Нет: Получаем новые</tspan></text>
+   <text x="80.838181" y="-48.611301" style="line-height:1.25" xml:space="preserve"><tspan x="80.838181" y="-48.611301" text-align="center" style="line-height:1.25">Получаем</tspan><tspan x="80.838181" y="-38.909912" text-align="center" style="line-height:1.25">данные</tspan></text>
+   <text x="237.92006" y="-48.638863" style="line-height:1.25" xml:space="preserve"><tspan x="237.92006" y="-48.638863" text-align="center">Данные согласованы?</tspan><tspan x="237.92006" y="-38.937473" text-align="center">Да: Обновляем значение</tspan></text>
+  </g>
+  <g stroke="#fff" stroke-width=".5">
+   <path d="m65.768-121.74h212.8" fill="none" marker-end="url(#marker17478)" stroke-dasharray="3.00000008, 3.00000008" stroke-dashoffset="5" stroke-miterlimit="0"/>
+   <g>
+    <rect x="99.345" y="-125.42" width="28.757" height="7.3489" fill="#008600"/>
+    <path d="m99.094-116.84 0.0108 40.09" fill="none" marker-end="url(#TriangleOutM-63)" marker-start="url(#marker4124-9)"/>
+    <rect transform="scale(1,-1)" x="95.431" y="66.73" width="7.3489" height="7.3489" fill="#fff"/>
+    <path d="m128.1-118.07 0.0108 41.325" fill="none" marker-end="url(#TriangleOutM-63-4)"/>
+   </g>
+  </g>
+  <g>
+   <rect transform="scale(1,-1)" x="124.44" y="66.73" width="7.3489" height="7.3489" fill="#fff" stroke="#fff" stroke-width=".5"/>
+   <g font-family="Arial" letter-spacing="0px" stroke-width=".26458" word-spacing="0px">
+    <text x="155.993" y="-99.318947" fill="#ffffff" font-size="7.0556px" text-anchor="middle" style="line-height:1.25" xml:space="preserve"><tspan x="155.993" y="-99.318947" text-align="center">Данные согласованы?</tspan><tspan x="155.993" y="-89.617561" text-align="center">Да: Обновляем значение</tspan></text>
+    <text x="81.557892" y="-128.66681" fill="#008600" font-size="7.7611px" style="line-height:1.25" xml:space="preserve"><tspan x="81.557892" y="-128.66681" fill="#008600" stroke-width=".26458">Быстрый процесс</tspan></text>
+    <text x="77.250725" y="-7.3421183" fill="#1648ff" font-size="7.7611px" style="line-height:1.25" xml:space="preserve"><tspan x="77.250725" y="-7.3421183" fill="#1648ff" stroke-width=".26458">Долгий процесс</tspan></text>
+    <text x="161.91605" y="-6.3719907" fill="#ff0000" font-size="7.7611px" style="line-height:1.25" xml:space="preserve"><tspan x="161.91605" y="-6.3719907" fill="#ff0000" stroke-width=".26458">Рестарт долгого процесса</tspan></text>
+    <text x="84.407295" y="-99.416466" fill="#ffffff" font-size="7.0556px" text-anchor="middle" style="line-height:1.25" xml:space="preserve"><tspan x="84.407295" y="-99.416466" text-align="center" style="line-height:1.25">Получаем</tspan><tspan x="84.407295" y="-89.71508" text-align="center" style="line-height:1.25">данные</tspan></text>
+   </g>
+  </g>
+  <path d="m245.64-19.313h32.928" fill="none" marker-end="url(#Arrow1Lend)" stroke="#f1f1f1" stroke-dasharray="3.00000008, 3.00000008" stroke-dashoffset="5" stroke-width=".5"/>
+  <rect x="15.612" y="-79.875" width="38.754" height="18.442" fill="none" stroke="#fff" stroke-linejoin="round" stroke-width=".5"/>
+  <text x="19.837177" y="-65.686127" fill="#000000" font-family="Arial" font-size="7.7611px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="19.837177" y="-65.686127" fill="#ffffff" font-size="14.111px" stroke-width=".26458">Data</tspan></text>
+ </g>
+</svg>

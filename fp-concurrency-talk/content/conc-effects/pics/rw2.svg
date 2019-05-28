@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="215.56mm" height="99.801mm" version="1.1" viewBox="0 0 215.56 99.801" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <marker id="marker1702" overflow="visible" orient="auto">
+   <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="marker1654" overflow="visible" orient="auto">
+   <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="marker1612" overflow="visible" orient="auto">
+   <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+  <marker id="marker1463" overflow="visible" orient="auto">
+   <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+  </marker>
+ </defs>
+ <g transform="translate(73.407 33.795)">
+  <g>
+   <rect x="72.331" y="-14.842" width="69.294" height="69.294" ry="10.112" fill="#fff" stroke="#fff" stroke-width="1.0465"/>
+   <text x="85.519409" y="26.840948" fill="#000000" font-family="Arial" font-size="12.213px" letter-spacing="0px" stroke-width=".41636" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="85.519409" y="26.840948" font-family="Arial" font-size="19.985px" stroke-width=".41636" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal">Data</tspan></text>
+   <rect x="-22.196" y="-15.54" width="50.466" height="27.566" ry="0" fill="#008000" stroke="#fff" stroke-linejoin="round" stroke-width=".47209"/>
+   <text x="3.0010285" y="-5.0900145" fill="#000000" font-family="Arial" font-size="12.213px" letter-spacing="0px" stroke-width=".41636" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="3.0010285" y="-5.0900145" text-align="center">Read</tspan><tspan x="3.0010288" y="10.176537" text-align="center">Lock</tspan></text>
+   <rect x="-22.196" y="25.502" width="50.466" height="27.566" ry="0" fill="#d45500" stroke="#fff" stroke-linejoin="round" stroke-width=".47209"/>
+   <text x="3.2186966" y="35.951225" fill="#000000" font-family="Arial" font-size="12.213px" letter-spacing="0px" stroke-width=".41636" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="3.2186966" y="35.951225" text-align="center">Write</tspan><tspan x="3.2186968" y="51.217777" text-align="center">Lock</tspan></text>
+   <g transform="matrix(-4.4106 0 0 4.4106 400.89 -242.26)" fill="#008000">
+    <path d="m75.748 53.778v1.4998h6.1217v-1.4998z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+    <path d="m83.62 54.528-1.8309 1.0583v-2.1167z" fill-rule="evenodd"/>
+   </g>
+   <g transform="matrix(4.4106 0 0 4.4106 -302.02 -201.22)" fill="#d45500">
+    <path d="m75.748 53.778v1.4998h6.1217v-1.4998z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+    <path d="m83.62 54.528-1.8309 1.0583v-2.1167z" fill-rule="evenodd"/>
+   </g>
+  </g>
+  <g fill="none" stroke="#fff">
+   <circle cx="-63.34" cy="55.939" r="9.6735" stroke-linejoin="round" stroke-width=".78682"/>
+   <g transform="matrix(1.5736 0 0 1.5736 -63.878 -67.936)" stroke-linejoin="round" stroke-width=".5">
+    <circle cx=".34181" cy="56.017" r="6.1472"/>
+    <circle cx=".34181" cy="28.093" r="6.1472"/>
+    <circle cx=".34181" cy="42.055" r="6.1472"/>
+   </g>
+   <g stroke-width=".41702">
+    <path d="m-53.574 52.872 30.493-7.15" marker-end="url(#marker1463)"/>
+    <path d="m-53.512-21.871c2.1029 0.84118 30.164 6.1828 30.164 6.1828" marker-end="url(#marker1612)"/>
+    <path d="m-53.589-2.0142h30.401" marker-end="url(#marker1654)"/>
+    <path d="m-53.675 18.654 30.532-6.4696" marker-end="url(#marker1702)"/>
+   </g>
+  </g>
+ </g>
+</svg>

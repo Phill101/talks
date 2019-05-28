@@ -84,7 +84,7 @@ class Auction(startsWith: Bid) {
             </ul>
           </section>
           <section>
-            todo картинка про актор
+            <img src="content/conc-effects/pics/actors2.svg" style="background: none; border: none; box-shadow: none;"></img>
           </section>
           <section>
             <pre><code class="scala" data-trim data-line-numbers="|1-9|4-8|6-7" data-fragment-index="0">
@@ -126,9 +126,6 @@ class Auction(startsWith: Bid) {
               <li class="fragment" data-fragment-index="3">Сайд-эффекты</li>
             </ul>
           </section>
-          <!--<section>
-            <object type="image/svg+xml" data="content/conc-effects/pics/method-draw-image(1).svg"></object>
-          </section>-->
           <section>
             <pre><code class="scala" data-trim data-line-numbers="|5" data-fragment-index="0">
 import java.util.concurrent.Semaphore
@@ -173,6 +170,9 @@ val expr = println("Hello!")
             </aside>
           </section>
           <section>
+            <img src="content/conc-effects/pics/core-shell.jpg"/>
+          </section>
+          <section>
             <pre><code class="scala" data-trim data-line-numbers="|1,8|2,4-5">
 class IO[A](val unsafeInterpret: () =&gt; A) { s =&gt;
   def map[B](f: A =&gt; B) = flatMap(f.andThen(IO(_)))
@@ -200,11 +200,11 @@ val program: IO[Unit] = for {
             <pre class="fragment" data-fragment-index="2"><code class="scala" data-trim>
 program.unsafeInterpret()
             </code></pre>
-            <!--<ul>
-              <li class="fragment" data-fragment-index="3">Композируемость</li>
-              <li class="fragment" data-fragment-index="4">Local reasoning</li>
-              <li class="fragment" data-fragment-index="5">Рефакторинг</li>
-            </ul>-->
+            <!--<aside class="notes">
+              <li>IO - композируемое, ссылочно-прозрачное описание</li>
+              <li>Конечный тип данных претендующий на право называться IO должен удовлетворять многим свойствам и требованиям</li>
+              <li>IO - некоторый рантайм, берёт на себя ответственность в вопросах отложенных вычислений. В том числе и конкурентных</li>
+            </aside>-->
           </section>
           <section data-background="FFFFFF">
             <img src="content/conc-effects/pics/typeclasses-cheat-sheet.png"/>
@@ -337,6 +337,64 @@ for {
         <section>
           <section>
             <h2>Read write</h2>
+          </section>
+          <section>
+            <svg width="215.56mm" height="99.801mm" version="1.1" viewBox="0 0 215.56 99.801" xmlns="http://www.w3.org/2000/svg">
+             <defs>
+              <marker id="marker1702" overflow="visible" orient="auto">
+               <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+              </marker>
+              <marker id="marker1654" overflow="visible" orient="auto">
+               <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+              </marker>
+              <marker id="marker1612" overflow="visible" orient="auto">
+               <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+              </marker>
+              <marker id="marker1463" overflow="visible" orient="auto">
+               <path transform="matrix(-.8 0 0 -.8 -10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#fff" fill-rule="evenodd" stroke="#fff" stroke-width="1pt"/>
+              </marker>
+             </defs>
+             <g transform="translate(73.407 33.795)">
+              <g>
+               <rect x="72.331" y="-14.842" width="69.294" height="69.294" ry="10.112" fill="#fff" stroke="#fff" stroke-width="1.0465"/>
+               <text x="85.519409" y="26.840948" fill="#000000" font-family="Arial" font-size="12.213px" letter-spacing="0px" stroke-width=".41636" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="85.519409" y="26.840948" font-family="Arial" font-size="19.985px" stroke-width=".41636" style="font-feature-settings:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal">Data</tspan></text>
+               <rect x="-22.196" y="-15.54" width="50.466" height="27.566" ry="0" fill="#008000" stroke="#fff" stroke-linejoin="round" stroke-width=".47209"/>
+               <text x="3.0010285" y="-5.0900145" fill="#000000" font-family="Arial" font-size="12.213px" letter-spacing="0px" stroke-width=".41636" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="3.0010285" y="-5.0900145" text-align="center">Read</tspan><tspan x="3.0010288" y="10.176537" text-align="center">Lock</tspan></text>
+               <rect x="-22.196" y="25.502" width="50.466" height="27.566" ry="0" fill="#d45500" stroke="#fff" stroke-linejoin="round" stroke-width=".47209"/>
+               <text x="3.2186966" y="35.951225" fill="#000000" font-family="Arial" font-size="12.213px" letter-spacing="0px" stroke-width=".41636" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="3.2186966" y="35.951225" text-align="center">Write</tspan><tspan x="3.2186968" y="51.217777" text-align="center">Lock</tspan></text>
+               <g class="fragment fade-out" data-fragment-index="0" transform="matrix(-4.4106 0 0 4.4106 400.89 -242.26)" fill="#008000">
+                <path d="m75.748 53.778v1.4998h6.1217v-1.4998z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+                <path d="m83.62 54.528-1.8309 1.0583v-2.1167z" fill-rule="evenodd"/>
+               </g>
+               <g class="fragment" data-fragment-index="0" transform="matrix(4.4106 0 0 4.4106 -302.02 -201.22)" fill="#d45500">
+                <path d="m75.748 53.778v1.4998h6.1217v-1.4998z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+                <path d="m83.62 54.528-1.8309 1.0583v-2.1167z" fill-rule="evenodd"/>
+               </g>
+              </g>
+              <g fill="none" stroke="#fff">
+               <circle cx="-63.34" cy="55.939" r="9.6735" stroke-linejoin="round" stroke-width=".78682"/>
+               <g transform="matrix(1.5736 0 0 1.5736 -63.878 -67.936)" stroke-linejoin="round" stroke-width=".5">
+                <circle cx=".34181" cy="56.017" r="6.1472"/>
+                <circle cx=".34181" cy="28.093" r="6.1472"/>
+                <circle cx=".34181" cy="42.055" r="6.1472"/>
+               </g>
+               <g stroke-width=".41702">
+                <path d="m-53.574 52.872 30.493-7.15" marker-end="url(#marker1463)"/>
+                <path d="m-53.512-21.871c2.1029 0.84118 30.164 6.1828 30.164 6.1828" marker-end="url(#marker1612)"/>
+                <path d="m-53.589-2.0142h30.401" marker-end="url(#marker1654)"/>
+                <path d="m-53.675 18.654 30.532-6.4696" marker-end="url(#marker1702)"/>
+               </g>
+              </g>
+             </g>
+            </svg>
+            <aside class="notes">
+              <li>Можно взять read/write блокировку</li>
+              <li>Пока в очереди нету врайтеров, ридеры свободно могут брать и отпускать</li>
+              <li>Когда появляется хотя бы один врайтер, он ложится в очередь ждать, пока все ридеры отпустят, и все остальные ридеры и врайтеры после него тоже отправляются очередь</li>
+              <li>F[A] должно быть отменяемо</li>
+            </aside>
+          </section>
+          <section>
             <pre><code class="scala" data-trim>
 trait ReadWrite[F[_], A] {
 
@@ -348,15 +406,15 @@ trait ReadWrite[F[_], A] {
 
 }
             </code></pre>
-            <pre class="fragment" data-fragment-index="1"><code class="scala" data-trim>
+            <pre><code class="scala" data-trim data-line-numbers="|2|3,5|4,6-7">
 val io = for { 
   rw &lt;- ReadWrite.of[IO, Int](10) 
-  (ten1, release1) &lt;- rw.read 
-  _  &lt;- rw.write.timeout(1.second).attempt 
-  (ten2, release2) &lt;- rw.read 
-  _  &lt;- release1
-  _  &lt;- release2
-} yield (ten1, ten2)
+  (ten, putAndRelease) &lt;- rw.write
+  rf &lt;- rw.read.start
+  _  &lt;- putAndRelease(ten + 1)
+  (eleven, release) &lt;- rf.join
+  _  &lt;- release
+} yield (ten, eleven)
             </code></pre>
           </section>
           <section>
@@ -407,18 +465,18 @@ object ReadWrite {
           <section>
             <pre style="width: 93%;"><code class="scala" data-trim data-noescape>
 override def read: F[(A, F[Unit])] = 
-  Deferred[F, (A, F[Unit])]<span class="fragment" data-fragment-index="0">.<span class="fragment fade-in" style="position:absolute" data-fragment-index="7">bracketCase { d =&gt;</span><span class="fragment fade-out" data-fragment-index="7">flatMap { d =&gt;</span>
+  Deferred[F, (A, F[Unit])]<span class="fragment" data-fragment-index="0">.<span class="fragment fade-in" style="position:absolute" data-fragment-index="9">bracketCase { d =&gt;</span><span class="fragment fade-out" data-fragment-index="9">flatMap { d =&gt;</span>
     <span class="fragment" data-fragment-index="1">state.modify {
       <span class="fragment" data-fragment-index="2">case s @ State(q, r, false, a) if q.isEmpty =&gt;</span>
-        <span class="fragment" data-fragment-index="3">s.copy(currentReaders = r + 1) -&gt;
+        <span class="fragment" data-fragment-index="3">s.copy(currentReaders = r + 1)</span><span class="fragment" data-fragment-index="4"> -&gt;
           d.complete(a -&gt; releaseRead)</span>
-      <span class="fragment" data-fragment-index="4">case s @ State(q, _, _, _) =&gt; </span>
-        <span class="fragment" data-fragment-index="5">s.copy(q = q :+ Reader(d)) -&gt; F.unit</span>
-    }</span><span class="fragment" data-fragment-index="3">.flatten</span><span class="fragment" data-fragment-index="6"> *&gt; d.get</span>
-  } </span><span class="fragment" data-fragment-index="7">{
-    <span class="fragment" data-fragment-index="8">case (d, Canceled | Error(_)) =&gt;</span>
-      <span class="fragment" data-fragment-index="9">state.update(s =&gt; s.copy(q = s.q.filter(_ != Reader(d))))</span>
-    <span class="fragment" data-fragment-index="10">case _ =&gt; F.unit</span>
+      <span class="fragment" data-fragment-index="6">case s @ State(q, _, _, _) =&gt; </span>
+        <span class="fragment" data-fragment-index="7">s.copy(q = q :+ Reader(d)) -&gt; F.unit</span>
+    }</span><span class="fragment" data-fragment-index="5">.flatten</span><span class="fragment" data-fragment-index="8"> *&gt; d.get</span>
+  } </span><span class="fragment" data-fragment-index="9">{
+    <span class="fragment" data-fragment-index="10">case (d, Canceled | Error(_)) =&gt;</span>
+      <span class="fragment" data-fragment-index="11">state.update(s =&gt; s.copy(q = s.q.filter(_ != Reader(d))))</span>
+    <span class="fragment" data-fragment-index="12">case _ =&gt; F.unit</span>
   }</span>
             </code></pre>
           </section>
@@ -426,15 +484,11 @@ override def read: F[(A, F[Unit])] =
             <pre style="width: 94%;"><code class="scala" data-trim data-noescape>
 private val releaseRead: F[Unit] = 
   state.modify {
-    case s @ State(q, r, _, _) if q.isEmpty =&gt; 
-      s.copy(currentReaders = r - 1) -&gt; F.unit
-    case s @ State(Writer(d) +: tl, 1, _, a) =&gt; 
-      s.copy(q = tl, currentReaders = 0, writeLocked = true) -&gt; 
-        d.complete(a -&gt; releaseWrite)
-    case s @ State(Writer(_) +: _, r, _, _) =&gt; 
-      s.copy(currentReaders = r - 1) -&gt; F.unit
-    case State(Reader(_) +: _, _, _, _) =&gt; 
-      sys.error("wrong state. next in queue should be writer")
+    <span class="fragment" data-fragment-index="1">case s @ State(Writer(d) +: tl, 1, _, a) =&gt;</span>
+      <span class="fragment" data-fragment-index="2">s.copy(q = tl, currentReaders = 0, writeLocked = true)</span><span class="fragment" data-fragment-index="3"> -&gt;
+        d.complete(a -&gt; releaseWrite)</span>
+    <span class="fragment" data-fragment-index="4">case s @ State(_, r, _, _) =&gt;</span>
+      <span class="fragment" data-fragment-index="5">s.copy(currentReaders = r - 1) -&gt; F.unit</span>
   }.flatten
             </code></pre>
           </section>
@@ -509,6 +563,19 @@ def transfer(from  : Ref[Account],
             <h2>Software Transactional Memory</h2>
           </section>
           <section>
+            <img src="content/conc-effects/pics/stm2.svg" style="background: none; border: none; box-shadow: none;"></img>
+            <div>
+              <ul>
+                <li class="fragment" data-fragment-index="1">Атомарность</li>
+                <li class="fragment" data-fragment-index="2">Согласованность</li>
+                <li class="fragment" data-fragment-index="3">Изолированность</li>
+              </ul>
+            </div>
+            <aside class="notes">
+              Доступ к данным осуществляется внутри транзакций. Находясь внутри транзакции, поток не видит изменений, производимых другими потоками. <b>Сохранение совершённых изменений</b> происходит при выходе из транзакции. Если в этот момент выясняется, что данные были изменены другим потоком, транзакция начинает выполняться сначала. Если внутри транзакции будет брошено исключение, данные не будут изменены.
+            </aside>
+          </section>
+          <section>
             <pre><code class="scala" data-trim data-noescape>
 def transfer(from  : TRef[Account], 
              to    : TRef[Account], 
@@ -530,9 +597,6 @@ def moneyTransfer(sender   : User,
     _    &lt;- transfer(from, to, amount).commit[IO]
   } yield ()
             </code></pre>
-            <span class="fragment" data-fragment-index="1">Atomicity</span>
-            <span class="fragment" data-fragment-index="2"> + Consistency</span>
-            <span class="fragment" data-fragment-index="3"> + Isolation</span>
           </section>
           <section>
             <pre><code class="scala" data-trim data-noescape>
@@ -552,6 +616,28 @@ object TSemaphore {
 }
             </code></pre>
           </section>
+        </section>
+        <section>
+          <h4>Что даёт функциональный подход?</h4>
+          <ol>
+            <li class="fragment" data-fragment-index="1">Ссылочная-прозрачность</li>
+            <ul>
+              <li class="fragment" data-fragment-index="2">Рефакторинг</li>
+              <li class="fragment" data-fragment-index="3">Простота рассуждений</li>
+            </ul>
+            <li class="fragment" data-fragment-index="4">Функциональный рантайм</li>
+            <ul>
+              <li class="fragment" data-fragment-index="5">Отсутствие блокировок</li>
+              <li class="fragment" data-fragment-index="6">Возможность отменять таски</li>
+              <li class="fragment" data-fragment-index="7">Монадичное API</li>
+            </ul>
+            <li class="fragment" data-fragment-index="8">Богатый набор возможностей</li>
+            <ul>
+              <li class="fragment" data-fragment-index="9">Множество встроенных примитивов</li>
+              <li class="fragment" data-fragment-index="10">Простота создания новых</li>
+              <li class="fragment" data-fragment-index="11">STM для очень сложных случаев</li>
+            </ul>
+          </ol>
         </section>
         <section>
           <h2>тут будут:</h2>

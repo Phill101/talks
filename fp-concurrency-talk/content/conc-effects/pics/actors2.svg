@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="304.58mm" height="68.518mm" version="1.1" viewBox="0 0 304.58 68.518" xmlns="http://www.w3.org/2000/svg" xmlns:osb="http://www.openswatchbook.org/uri/2009/osb" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient6457" x1="108.19" x2="173.19" y1="203.31" y2="203.31" gradientTransform="matrix(.48493 0 0 .48493 -13.122 -86.235)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#f00" offset="0"/>
+  </linearGradient>
+ </defs>
+ <g transform="translate(-3.2272 17.954)">
+  <path d="m11.994-15.141v18.912h9.1966v6.0133h9.1966v6.0133h9.1966v-0.96986h-8.2268v-16.567l8.2268 5.3068v-0.66868h0.75108l-7.8167-5.0435h26.773l-7.8167 5.0435h1.7882l7.1897-4.6381v4.6381h0.96986v-6.0133h-9.1966v-6.0133h-9.1966v-6.0133zm2.131 0.96986h26.773l-7.8167 5.0435h-11.14zm-1.1612 0.40537 8.2268 5.3068v11.26h-8.2268zm29.096 0v4.6381h-7.1897zm-18.738 5.608h26.773l-7.8167 5.0435h-11.14zm-1.1612 0.40537 8.2268 5.3068v11.26h-8.2268zm29.096 0v4.6381h-7.1897z" fill="#fff" stroke-width=".48493"/>
+  <path d="m70.62 2.899h-31.036v18.912h31.036zm-2.1313 0.96986-13.387 8.6366-13.387-8.6366zm-27.934 16.973v-16.568l14.548 9.3858 14.548-9.3858v16.568z" fill="url(#linearGradient6457)"/>
+  <rect x="3.8011" y="29.147" width="74.64" height="20.844" fill="none" stroke="#fff" stroke-width="1.1479"/>
+  <g transform="matrix(1.5006 0 0 1.5006 -47.808 -23.276)" fill="#f50000">
+   <path d="m85.526 40.223v3.0695h12.696v-3.0695z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+   <path d="m101.29 41.758-4.6018 2.66v-5.32z" fill-rule="evenodd"/>
+  </g>
+  <rect x="106.23" y="29.147" width="85.789" height="20.763" fill="none" stroke="#fff" stroke-width="1.2283"/>
+  <text x="148.91293" y="42.738392" fill="#ffffff" font-family="Arial" font-size="11.646px" letter-spacing="0px" stroke-width=".39702" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="148.91293" y="42.738392" fill="#ffffff" font-size="12.705px" stroke-width=".39702" text-align="center" text-anchor="middle" style="line-height:0">Message Loop</tspan></text>
+  <rect x="221.4" y="29.147" width="85.789" height="20.763" fill="none" stroke="#fff" stroke-width="1.2283"/>
+  <g>
+   <text x="264.09033" y="44.075237" fill="#ffffff" font-family="Arial" font-size="11.646px" letter-spacing="0px" stroke-width=".39702" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="264.09033" y="44.075237" fill="#ffffff" font-size="12.705px" stroke-width=".39702" text-align="center" text-anchor="middle" style="line-height:0">Mutable State</tspan></text>
+   <g transform="matrix(1.5006 0 0 1.5006 66.534 -18.512)" fill="#f50000">
+    <path d="m85.526 40.223v3.0695h12.696v-3.0695z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+    <path d="m101.29 41.758-4.6018 2.66v-5.32z" fill-rule="evenodd"/>
+   </g>
+   <g transform="matrix(-1.5006 0 0 1.5006 346.22 -28.521)" fill="#f50000">
+    <path d="m85.526 40.223v3.0695h12.696v-3.0695z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+    <path d="m101.29 41.758-4.6018 2.66v-5.32z" fill-rule="evenodd"/>
+   </g>
+  </g>
+  <g transform="matrix(.042406 0 0 .042406 128.41 -18.378)" fill="#008000">
+   <path d="m500 766.9v-133.4l177.2 177.2-177.2 179.3v-133.4c-97.3 0-181-35.1-251.2-105.3s-105.3-154-105.3-251.3c0-69.5 18.8-132.8 56.3-189.8l64.6 64.6c-20.8 37.5-31.3 79.3-31.3 125.1 0 73.7 26.1 136.6 78.2 188.7 52.2 52.3 115.1 78.3 188.7 78.3zm0-623.5c97.3 0 181 35.1 251.2 105.3s105.3 153.9 105.3 251.2c0 69.5-18.8 132.8-56.3 189.8l-64.6-64.6c20.8-37.5 31.3-79.3 31.3-125.1 0-73.7-26.1-136.6-78.2-188.7s-115-78.2-188.7-78.2v133.4l-177.3-177.2 177.3-179.3z" fill="#008000"/>
+  </g>
+  <g transform="matrix(1.6732 0 0 1.6732 243.91 -19.829)" fill="#fff">
+   <g fill="#fff">
+    <path d="m23 2h-20c-1.656 0-3 1.343-3 3v16c0 1.656 1.344 3 3 3h20c1.656 0 3-1.344 3-3v-16c0-1.657-1.344-3-3-3zm1 19c0 0.551-0.449 1-1 1h-20c-0.551 0-1-0.449-1-1v-14h22z"/>
+    <path d="m19.402 14.215c0 1.029-0.125 1.926-0.374 2.691-0.147 0.453-0.464 1.16-0.935 2.094h1.166c0.546-0.87 0.923-1.553 1.109-2.024 0.335-0.826 0.502-1.766 0.502-2.819 0-0.402-0.036-0.82-0.109-1.255-0.073-0.434-0.195-0.874-0.366-1.318-0.135-0.359-0.261-0.642-0.376-0.847-0.069-0.121-0.224-0.377-0.446-0.736h-1.206c0.276 0.565 0.482 1.035 0.603 1.391 0.288 0.853 0.432 1.795 0.432 2.823z"/>
+    <path d="m6.563 14.215c0 1.029 0.125 1.926 0.374 2.691 0.147 0.453 0.463 1.16 0.934 2.094h-1.166c-0.546-0.87-0.923-1.553-1.109-2.024-0.335-0.826-0.502-1.766-0.502-2.819 0-0.402 0.036-0.82 0.109-1.255 0.073-0.434 0.195-0.874 0.366-1.318 0.135-0.359 0.261-0.642 0.376-0.847 0.07-0.122 0.224-0.378 0.447-0.737h1.206c-0.276 0.565-0.482 1.035-0.603 1.391-0.288 0.854-0.432 1.796-0.432 2.824z"/>
+    <path d="m17.03 12.088c0 0.378-0.12 0.679-0.361 0.902s-0.535 0.335-0.882 0.335c-0.208 0-0.413-0.026-0.615-0.078-0.201-0.052-0.376-0.104-0.524-0.156-0.069 0.048-0.171 0.152-0.305 0.313-0.135 0.161-0.286 0.356-0.456 0.586 0.155 0.665 0.281 1.137 0.377 1.417 0.095 0.279 0.186 0.563 0.272 0.85 0.074 0.228 0.183 0.407 0.325 0.536 0.144 0.129 0.369 0.193 0.678 0.193 0.113 0 0.254-0.021 0.423-0.065 0.17-0.043 0.309-0.087 0.417-0.13l-0.144 0.589c-0.43 0.184-0.805 0.317-1.125 0.399-0.321 0.084-0.607 0.125-0.859 0.125-0.183 0-0.362-0.018-0.541-0.052-0.178-0.035-0.341-0.098-0.487-0.189-0.16-0.096-0.296-0.215-0.407-0.357-0.11-0.144-0.205-0.344-0.283-0.6-0.053-0.16-0.101-0.343-0.144-0.547-0.044-0.204-0.088-0.385-0.132-0.541-0.126 0.188-0.217 0.326-0.273 0.417-0.057 0.092-0.139 0.22-0.247 0.385-0.343 0.525-0.641 0.899-0.893 1.123s-0.554 0.335-0.905 0.335c-0.265 0-0.49-0.089-0.677-0.267s-0.28-0.41-0.28-0.696c0-0.387 0.12-0.691 0.361-0.916 0.242-0.223 0.536-0.335 0.885-0.335 0.208 0 0.408 0.025 0.6 0.075s0.372 0.105 0.541 0.166c0.065-0.053 0.167-0.154 0.304-0.307 0.137-0.151 0.285-0.34 0.446-0.566-0.145-0.581-0.262-1.02-0.354-1.315-0.093-0.295-0.186-0.588-0.282-0.879-0.078-0.232-0.191-0.412-0.339-0.538-0.147-0.128-0.369-0.191-0.664-0.191-0.131 0-0.276 0.023-0.437 0.068-0.161 0.046-0.295 0.088-0.403 0.127l0.143-0.589c0.391-0.175 0.76-0.307 1.109-0.394 0.35-0.088 0.642-0.131 0.876-0.131 0.213 0 0.395 0.016 0.547 0.046 0.151 0.03 0.312 0.095 0.48 0.195 0.156 0.095 0.292 0.216 0.407 0.361s0.21 0.344 0.283 0.596c0.054 0.174 0.102 0.354 0.146 0.54 0.044 0.188 0.081 0.348 0.112 0.482 0.091-0.139 0.186-0.282 0.283-0.43s0.181-0.278 0.25-0.391c0.335-0.525 0.634-0.902 0.899-1.13 0.264-0.229 0.563-0.342 0.897-0.342 0.273 0 0.501 0.09 0.684 0.27 0.183 0.181 0.274 0.415 0.274 0.701z" fill="#fff"/>
+   </g>
+  </g>
+  <text x="40.69614" y="44.040981" fill="#ffffff" font-family="Arial" font-size="11.646px" letter-spacing="0px" stroke-width=".39702" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="40.69614" y="44.040981" fill="#ffffff" font-size="12.705px" stroke-width=".39702" text-align="center" text-anchor="middle" style="line-height:0">Mailbox</tspan></text>
+ </g>
+</svg>
