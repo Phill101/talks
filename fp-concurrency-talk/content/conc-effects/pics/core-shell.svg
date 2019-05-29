@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="142.88mm" height="142.88mm" version="1.1" viewBox="0 0 142.88 142.88" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <g transform="translate(-19.744 262.62)">
+  <circle id="path4522" transform="matrix(-.8362 .54843 .54843 .8362 0 0)" cx="-181.1" cy="-109.85" r="70.974" fill="#bc0000" stroke="#000" stroke-width=".92291"/>
+  <circle cx="91.185" cy="-191.18" r="54.918" fill="#009800"/>
+  <text x="91.142235" y="-195.57643" fill="#ffffff" font-family="sans-serif" font-size="17.445px" letter-spacing="0px" stroke-width=".43612" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="91.142235" y="-195.57643" text-align="center">Functional</tspan><tspan x="91.142235" y="-173.7702" text-align="center">core</tspan></text>
+  <text fill="#000000" font-family="sans-serif" font-size="10.583px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><textPath font-size="14.111px" xlink:href="#path4522"><tspan dx="16.252983" dy="-3.9687502" fill="#ffffff" font-size="14.111px" stroke-width=".26458">Imperative shell</tspan></textPath></text>
+ </g>
+</svg>
